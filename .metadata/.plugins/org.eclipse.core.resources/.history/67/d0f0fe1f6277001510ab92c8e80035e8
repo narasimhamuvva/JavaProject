@@ -1,0 +1,21 @@
+import java.util.HashMap;
+import java.util.Map;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+public class UserFile {
+public static Map<String, String> handler(Document doc1) {
+		NodeList nodelist = doc1.getElementsByTagName("row");
+		Map<String, String> map = new HashMap<String, String>();
+		for (int i = 0; i < nodelist.getLength(); i++) {
+			Node nNode = nodelist.item(i);
+			if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+				Element eElement = (Element) nNode;
+				map.put(eElement.getAttribute("Id"), eElement.getAttribute("DisplayName"));
+			}
+		}
+		return map;
+	}
+}

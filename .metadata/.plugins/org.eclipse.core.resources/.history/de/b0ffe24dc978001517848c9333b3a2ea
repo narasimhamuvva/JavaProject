@@ -1,0 +1,39 @@
+package OwnParsing;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Main {
+	public static ArrayList<String> questions = new ArrayList<String>();
+	public static ArrayList<String> answers = new ArrayList<String>();
+	public static void main (String args[]) throws IOException{
+		FileReader file1=new FileReader("/Users/narasimharaomuvva/Downloads/posts.xml");
+		@SuppressWarnings("resource")
+		BufferedReader buffer = new BufferedReader(file1);
+		FileReader file2=new FileReader("/Users/narasimharaomuvva/Downloads/posts.xml");
+		BufferedReader buffer1 = new BufferedReader(file2);
+	
+	while(buffer.ready())
+	{
+		String line=buffer.readLine();
+
+	Pattern PostId=Pattern.compile("PostTypeId+\\=\"(\\d)");
+	Pattern OwnerId=Pattern.compile("OwnerUserId+\\=\"(\\d{1,10})");
+	
+	Matcher matcher1=PostId.matcher(line);
+	Matcher matcher2=OwnerId.matcher(line);
+	if (matcher1.find() & matcher2.find()) {
+		String postType = matcher1.group(1);
+		String userType = matcher2.group(1);
+	}
+	
+	
+	}
+	}		
+}
+
+

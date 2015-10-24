@@ -1,0 +1,29 @@
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
+public class Count {
+	
+	public  HashMap<String, Integer> countof(ArrayList<String> number ) throws SAXException, IOException, ParserConfigurationException{
+
+		int c = 0;
+		HashMap<String, Integer> stringsCount = new HashMap<String, Integer>();
+		for (String s : number) {
+			if (!(stringsCount.keySet().contains(s))) {
+				c = 1;
+				stringsCount.put(s, c);
+			} else {
+				c = stringsCount.get(s) + 1;
+				stringsCount.put(s, c);
+			}
+		}
+		return stringsCount;
+
+}
+
+}

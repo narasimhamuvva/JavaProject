@@ -1,0 +1,22 @@
+
+import java.util.*;
+
+public class Permutation {
+	public boolean stringspermutation(String string1,String string2)
+	{
+		if (string1.length()!=string2.length())
+		{
+			return false;
+		}
+		Hashtable<Object, Object> ht=new Hashtable<Object, Object>();
+		for (int i=0;i<string1.length();i++)
+		{
+			
+			
+		}
+	
+	
+	return true;
+	}
+
+}

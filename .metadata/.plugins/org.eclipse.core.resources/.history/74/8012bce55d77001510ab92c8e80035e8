@@ -1,0 +1,75 @@
+package SaxParsing;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
+
+public class Main {
+
+	public static void main(String[] args) throws SAXException, IOException {
+		File inputFile = new File("/Users/narasimharaomuvva/Downloads/users.xml");
+        SAXParserFactory factory = SAXParserFactory.newInstance();
+        SAXParser saxParser = null;
+		try {
+			saxParser = factory.newSAXParser();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        UserFile userhandler = new UserFile();
+        saxParser.parse(inputFile, userhandler); 
+        File inputFile1 = new File("/Users/narasimharaomuvva/Downloads/users.xml");
+        SAXParserFactory factory1 = SAXParserFactory.newInstance();
+        SAXParser saxParser1 = null;
+		try {
+			saxParser1 = factory1.newSAXParser();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        UserFile handler1 = new UserFile();
+        saxParser1.parse(inputFile1, handler1);
+		//XMLReader postReader = XMLReaderFactory.createXMLReader();
+		//XMLReader UsersReader = XMLReaderFactory.createXMLReader();
+
+		//postReader.setContentHandler(new PostFile());
+		//UsersReader.setContentHandler(new UserFile());
+
+		//postReader.parse("/Users/narasimharaomuvva/Downloads/posts.xml");
+		//UsersReader.parse("/Users/narasimharaomuvva/Downloads/users.xml");
+
+		Sort sorting = new Sort();
+		Count count = new Count();
+
+		HashMap<String, Integer> stringsCountQuestions = count.count(PostFile.questions);
+		HashMap<String, Integer> stringsCountAnswers = count.count(PostFile.answers);
+
+		List<String> top10QuestionUsers = sorting.sortingByValue(stringsCountQuestions);
+		List<String> top10AnswerUsers = sorting.sortingByValue(stringsCountAnswers);
+
+		List<String> questionUsers = new ArrayList<String>();
+		List<String> answerUsers = new ArrayList<String>();
+
+		for (String s : top10QuestionUsers) {
+			questionUsers.add(UserFile.map.get(s));
+		}
+		System.out.println("The top 10 users who asked questions are : " + questionUsers);
+
+		for (String s : top10AnswerUsers) {
+			answerUsers.add(UserFile.map.get(s));
+		}
+		System.out.println("The top 10 users who answered the questions are : " + answerUsers);
+
+	}
+
+}

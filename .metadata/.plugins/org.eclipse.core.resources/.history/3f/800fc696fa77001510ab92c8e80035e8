@@ -1,0 +1,26 @@
+
+
+import java.util.ArrayList;
+import java.util.HashMap;
+public class Count {
+	
+	public  HashMap<String, Integer> countof(ArrayList<String> number ) {
+try{
+		int c = 0;
+		HashMap<String, Integer> Counting = new HashMap<String, Integer>();
+		for (String s : number) {
+			if (!(Counting.keySet().contains(s))) {
+				c = 1;
+				Counting.put(s, c);
+			} else {
+				c = Counting.get(s) + 1;
+				Counting.put(s, c);
+			}
+		}
+		return Counting;
+}catch(NullPointerException e)
+{
+}
+}
+}
+

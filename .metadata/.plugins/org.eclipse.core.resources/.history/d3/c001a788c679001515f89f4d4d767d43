@@ -1,0 +1,115 @@
+package OwnParsing;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import SaxParsing.Count;
+import SaxParsing.Sort;
+
+public class Main {
+	public static Map<String, String> usermap = new HashMap<String, String>();
+	public static ArrayList<String> Questions;
+	public static ArrayList<String> Answers;
+	static HashMap <String ,Integer> questions=new HashMap<String ,Integer>();
+    static HashMap <String ,Integer> answers=new HashMap<String ,Integer>();
+	public static void main (String args[]) throws IOException{
+		FileReader file1=new FileReader("/Users/narasimharaomuvva/Downloads/posts.xml");
+		@SuppressWarnings("resource")
+		BufferedReader buffer = new BufferedReader(file1);
+		FileReader file2=new FileReader("/Users/narasimharaomuvva/Downloads/users.xml");
+		@SuppressWarnings("resource")
+		BufferedReader buffer1 = new BufferedReader(file2);
+	
+	while(buffer.ready())
+	{
+	String line=buffer.readLine();
+
+	Pattern PostId=Pattern.compile("PostTypeId+\\=\"(\\d)");
+	Pattern OwnerId=Pattern.compile("OwnerUserId+\\=\"(\\d{1,10})");
+	
+	Matcher matcher1=PostId.matcher(line);
+	Matcher matcher2=OwnerId.matcher(line);
+	if (matcher1.find() & matcher2.find()) {
+		String postType = matcher1.group(1);
+		String userType = matcher2.group(1);
+		
+		if(postType.equals(1))
+		{
+			
+			if(questions.containsKey(userType))
+	    	{
+	    		int val=questions.get(userType)+1;
+	    		System.out.print(val);
+	    		questions.put(userType, val);
+	    	}
+	    	else
+	    		questions.put(userType, 1);
+		
+			
+		}else
+	    	if(answers.containsKey(userType))
+	    	{
+	    		int val=answers.get(userType)+1;
+	    		questions.put(userType, val);
+	    	}
+	    	else
+	    		answers.put(userType, 1);
+	}
+	}
+	
+	Questions=new ArrayList<String>(questions.keySet());
+	
+	Questions.add("OwnerUserId");
+	
+	Answers=new ArrayList<String>(answers.keySet());
+	Answers.add("OwnerUserId");
+	
+	while (buffer1.ready()) {
+		String line2 = buffer1.readLine(); 
+		Pattern Id=Pattern.compile("Id+\\=\"(\\d)");
+		Pattern DisplayName=Pattern.compile("DisplayName+\\=\"(.*?)\"");
+		Matcher matcher1=Id.matcher(line2);
+		Matcher matcher2=DisplayName.matcher(line2);
+		if (matcher1.find() & matcher2.find()) {
+			String userid = matcher1.group(1);
+			String username = matcher2.group(1);
+			
+		usermap.put(userid, username);
+		
+	}	
+	}
+	Sort sorting = new Sort();
+	Count count = new Count();
+
+	HashMap<String, Integer> stringsCountQuestions = count.count(Questions);
+	HashMap<String, Integer> stringsCountAnswers = count.count(Answers);
+
+	List<String> top10QUsers = sorting.sortingByValue(stringsCountQuestions);
+	List<String> top10AUsers = sorting.sortingByValue(stringsCountAnswers);
+	System.out.println(top10QuestionUsers);
+
+	List<String> questionUsers = new ArrayList<String>();
+	List<String> answerUsers = new ArrayList<String>();
+	
+	for (String s : top10QuestionUsers) {
+		questionUsers.add(usermap.get(s));
+		
+	}
+	System.out.println("The top 10 users who asked questions are : " + questionUsers);
+
+	for (String s : top10AnswerUsers) {
+		answerUsers.add(usermap.get(s));
+	}
+	System.out.println("The top 10 users who answered the questions are : " + answerUsers);
+
+}
+}
+
+

@@ -1,0 +1,11 @@
+package OwnParsing;
+
+public class RegexParser {
+	public String getNode(String row,String line)
+	{
+		
+		return null;
+		
+	}
+
+}

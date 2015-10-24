@@ -1,0 +1,26 @@
+
+public class User 
+{
+	//XML attribute id
+	private String OwnerUserId;
+	private int PostTypeId;
+	
+	
+	
+	public String OwnerUserId() {
+		return OwnerUserId;
+	}
+	public void setOwnerUserId(String id) {
+		this.OwnerUserId= id;
+	}
+	public int getPostTypeId() {
+		return PostTypeId;
+	}
+	public void setPostTypeId(int postTypeId) {
+		this.PostTypeId = PostTypeId;
+	
+	@Override
+	public String toString() {
+		return this.id + ":" + this.firstName +  ":" +this.lastName ;
+	}
+}

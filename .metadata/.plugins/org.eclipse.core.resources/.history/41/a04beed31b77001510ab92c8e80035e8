@@ -1,0 +1,50 @@
+package SaxParsing;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
+
+public class Main {
+
+	public static void main(String[] args) throws SAXException, IOException {
+		XMLReader postReader = XMLReaderFactory.createXMLReader();
+		XMLReader UsersReader = XMLReaderFactory.createXMLReader();
+
+		postReader.setContentHandler(new PostFile());
+		UsersReader.setContentHandler(new UserFile());
+
+		postReader.parse("/Users/narasimharaomuvva/Downloads/posts-short.xml");
+		UsersReader.parse("/Users/narasimharaomuvva/Downloads/users-short.xml");
+
+		Sort sorting = new Sort();
+		Count count = new Count();
+
+		// counts the occurrences of OwnerUserId
+		HashMap<String, Integer> stringsCountQuestions = count.countOccurrences(PostFile.numberOfQuestions);
+		HashMap<String, Integer> stringsCountAnswers = count.countOccurrences(PostFile.numberOfAnswers);
+
+		// Sorting the map by occurrences and returns the last 10 keys which are
+		// the top most UserIds asking questions/answers
+		List<String> top10QuestionUsers = sorting.sortingByValue(stringsCountQuestions);
+		List<String> top10AnswerUsers = sorting.sortingByValue(stringsCountAnswers);
+
+		List<String> questionUsers = new ArrayList<String>();
+		List<String> answerUsers = new ArrayList<String>();
+
+		for (String s : top10QuestionUsers) {
+			questionUsers.add(UserFile.map.get(s));
+		}
+		System.out.println("The top 10 users(using SAX) who ask questions are : " + questionUsers);
+
+		for (String s : top10AnswerUsers) {
+			answerUsers.add(UserFile.map.get(s));
+		}
+		System.out.println("The top 10 users(using SAX) who answer are : " + answerUsers);
+
+	}
+
+}

@@ -1,0 +1,35 @@
+package OwnParsing;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.regex.Pattern;
+
+public class Main {
+	public static void main (String args[]) throws IOException{
+		FileReader file1=new FileReader("/Users/narasimharaomuvva/Downloads/posts.xml");
+		@SuppressWarnings("resource")
+		BufferedReader buffer = new BufferedReader(file1);
+		FileReader file2=new FileReader("/Users/narasimharaomuvva/Downloads/posts.xml");
+		BufferedReader buffer1 = new BufferedReader(file2);
+	
+	while(buffer.ready())
+	{
+		String line=buffer.readLine();
+	
+	}
+	Pattern PostId=Pattern.compile("PostTypeId+\\=\"(\\d)");
+	
+	
+	while(buffer1.readLine()!=null)
+	{
+		System.out.println(buffer1.readLine());
+	}
+	
+	}
+	
+	
+	
+}
+
+

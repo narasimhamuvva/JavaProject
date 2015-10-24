@@ -1,0 +1,27 @@
+
+public class StringRotation {
+	
+	static boolean rotation(String string1,String string2) {
+		int length1,length2;
+		length1=string1.length();
+		length2=string2.length();
+		if(length1==length2 && length1>0 && length2>0) {
+			
+			String string3=string1+string1;
+			return isSubstring(string3,string2);
+		}
+		return false;
+	}
+	static boolean isSubstring(String str1str1,String str2) {
+		return str1str1.contains(str2);
+	}
+	static public void main(String[] args) {
+		String string1="waterbottle";
+		String string2="waterbottle";
+		if(rotation(string1,string2)==false) {
+			System.out.println("STRING2 IS NOT ROTATION OF STRING1 ");
+		} else {
+			System.out.println("STRING2 IS ROTATION OF STRING1");
+		}	
+	}
+}
